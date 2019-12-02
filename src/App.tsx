@@ -1,5 +1,7 @@
+import { input as OriginalInput } from './input'
 import React from 'react'
-import { input } from './input'
+
+let input = [...OriginalInput]
 
 const getInstructionValue = (index: number) => input[input[index]]
 const getAddress = (index: number) => input[index]
@@ -16,7 +18,24 @@ const handleAdd = (index: number) => {
     input[getAddress(index + 3)] = sum
 }
 
-const handleOps = (value: number, index: number) => {
+const findNumber = () => {
+    for (let i = 0; i < 100; i++) {
+        for (let j = 0; j < 100; j++) {
+            input = [...OriginalInput]
+
+            input[1] = i
+            input[2] = j
+
+            input.forEach(intCodeComputer)
+
+            if (input[0] === 19690720) return 100 * i + j
+        }
+    }
+
+    console.table(input)
+}
+
+const intCodeComputer = (value: number, index: number) => {
     if (index % 4 !== 0) {
         return
     }
@@ -29,20 +48,24 @@ const handleOps = (value: number, index: number) => {
             handleMultiplication(index)
             break
         case 99:
-            break
+            return
     }
 }
 
 const runComputer = () => {
-    input.forEach(handleOps)
-
-    console.table(input) /* Debug bby */
+    input.forEach(intCodeComputer)
 
     return input[0]
 }
 
 const App: React.FC = () => {
-    return <div>{runComputer()}</div>
+    return (
+        <div>
+            <span>Part 1: {runComputer()}</span>
+            <br />
+            <span>Part 2: {findNumber()}</span>
+        </div>
+    )
 }
 
 export default App
