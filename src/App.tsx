@@ -22,7 +22,6 @@ const findNumber = () => {
     for (let i = 0; i < 100; i++) {
         for (let j = 0; j < 100; j++) {
             input = [...OriginalInput]
-
             input[1] = i
             input[2] = j
 
@@ -31,8 +30,6 @@ const findNumber = () => {
             if (input[0] === 19690720) return 100 * i + j
         }
     }
-
-    console.table(input)
 }
 
 const intCodeComputer = (value: number, index: number) => {
